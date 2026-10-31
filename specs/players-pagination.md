@@ -17,6 +17,8 @@ so they don't have to download the whole squad on every request.
    still returns all 26 players.
 7. GET /players/ with no parameters returns the same response as before this change,
    and all existing tests pass without being edited.
+8. After POST /players/ creates a player, GET /players/?page=2&size=20 includes that
+   player on the next request (cached pages are cleared by writes, as the full list is).
 
 ## Constraints
 - No new dependencies.
@@ -24,7 +26,8 @@ so they don't have to download the whole squad on every request.
   tests/test_main.py, and optionally one new file services/pagination.py.
 - The response stays a JSON list of players (no wrapper object, no new fields).
 - No database schema or migration changes.
-- Maximum page size is 100; default page is 1 and default size is 20.
+- Maximum page size is 100. When only one of page or size is given, the other
+  defaults to page 1 or size 20. With neither, the full list is returned unchanged.
 - uv run pytest -q, uv run flake8 . and uv run black --check . all pass.
 
 ## Non-goals
