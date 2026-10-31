@@ -1,0 +1,13 @@
+learner_id: "25280060"
+assignment: "a1"
+repository:
+  url: "https://github.com/AmmarAsdaque/ASEE-repo"
+  branch: "course-work"
+  language: "Python"
+commits:
+  - "<hash>"
+agent_tool:
+  name: "Codex"
+  model: "GPT-6.1-Sol default"
+  tier: "paid"
+notes: ""
