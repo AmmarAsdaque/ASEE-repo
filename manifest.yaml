@@ -5,7 +5,7 @@ repository:
   branch: "course-work"
   language: "Python"
 commits:
-  - "<hash>"
+  - "f341a76"
 agent_tool:
   name: "Codex"
   model: "GPT-6.1-Sol default"
