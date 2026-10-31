@@ -1,0 +1,3 @@
+In services/pagination.py, write a function parse_pagination(args: dict) -> tuple[int, int]
+that reads "page" and "size" from a query-string dict and returns (offset, limit).
+Use sensible defaults. Do not change any other file. Then show me the function.
