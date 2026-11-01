@@ -52,3 +52,11 @@ exclude = '''
   | tests/test_main\.py
 )/
 '''
+
+[tool.mutmut]
+source_paths = ["models/"]
+also_copy = ["main.py", "routes/", "services/", "databases/", "schemas/", "alembic/", "alembic.ini"]
+pytest_add_cli_args_test_selection = ["tests/test_main.py", "-k", "validate_squad_number"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
