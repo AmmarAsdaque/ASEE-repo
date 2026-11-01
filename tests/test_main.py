@@ -442,3 +442,66 @@ def test_request_get_players_ac8_response_page_cache_cleared_after_write(client)
         assert after.headers["X-Cache"] == "MISS"
     finally:
         client.delete(PATH + "squadnumber/" + str(player.squad_number))
+
+
+# GET /players/count -----------------------------------------------------------
+
+
+def test_request_get_players_count_seeded_response_count(client):
+    # Arrange
+    expected = {"count": 26}
+    # Act
+    response = client.get(PATH + "count")
+    # Assert
+    assert response.status_code == 200
+    assert response.json() == expected
+
+
+def test_request_get_players_count_writes_response_updated_count(client):
+    # Arrange
+    player = nonexistent_player()
+    before = client.get(PATH + "count")
+    try:
+        assert client.post(PATH, json=player.__dict__).status_code == 201
+        # Act
+        after_create = client.get(PATH + "count")
+        deleted = client.delete(PATH + "squadnumber/" + str(player.squad_number))
+        after_delete = client.get(PATH + "count")
+        # Assert
+        assert before.status_code == after_create.status_code == 200
+        assert after_delete.status_code == 200
+        assert before.json() == after_delete.json() == {"count": 26}
+        assert after_create.json() == {"count": 27}
+        assert deleted.status_code == 204
+    finally:
+        client.delete(PATH + "squadnumber/" + str(player.squad_number))
+
+
+def test_request_get_players_count_empty_response_zero(client):
+    # Arrange
+    from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+
+    from databases.player_database import Base, generate_async_session
+    from main import app
+
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
+
+    async def create_tables():
+        async with engine.begin() as connection:
+            await connection.run_sync(Base.metadata.create_all)
+
+    async def empty_session():
+        async with AsyncSession(engine) as session:
+            yield session
+
+    client.portal.call(create_tables)
+    app.dependency_overrides[generate_async_session] = empty_session
+    try:
+        # Act
+        response = client.get(PATH + "count")
+        # Assert
+        assert response.status_code == 200
+        assert response.json() == {"count": 0}
+    finally:
+        app.dependency_overrides.pop(generate_async_session)
+        client.portal.call(engine.dispose)

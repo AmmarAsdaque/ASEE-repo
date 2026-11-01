@@ -18,7 +18,7 @@ import logging
 from typing import List, Optional
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -59,6 +59,12 @@ async def create_async(
 
 
 # Retrieve ---------------------------------------------------------------------
+
+
+async def count_async(async_session: AsyncSession) -> int:
+    """Count all players directly in the database."""
+    result = await async_session.execute(select(func.count()).select_from(Player))
+    return result.scalar_one()
 
 
 async def retrieve_all_async(async_session: AsyncSession) -> List[Player]:

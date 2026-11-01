@@ -11,6 +11,7 @@ Features:
 Endpoints:
 - POST /players/                          : Create a new Player.
 - GET /players/                           : Retrieve all Players.
+- GET /players/count                      : Count all Players.
 - GET /players/{player_id}                : Retrieve Player by UUID
                                             (surrogate key, internal).
 - GET /players/squadnumber/{squad_number} : Retrieve Player by Squad Number
@@ -136,6 +137,20 @@ async def get_all_async(
         await simple_memory_cache.set(cache_key, players, ttl=CACHE_TTL)
         response.headers["X-Cache"] = "MISS"
     return players
+
+
+@api_router.get(
+    "/players/count",
+    response_model=dict[str, int],
+    status_code=status.HTTP_200_OK,
+    summary="Counts all Players",
+    tags=["Players"],
+)
+async def get_count_async(
+    async_session: Annotated[AsyncSession, Depends(generate_async_session)],
+) -> dict[str, int]:
+    """Return the total number of players."""
+    return {"count": await player_service.count_async(async_session)}
 
 
 @api_router.get(
