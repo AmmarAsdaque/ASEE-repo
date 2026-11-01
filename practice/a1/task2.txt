@@ -1,0 +1,1 @@
+Add an endpoint that returns the players who play in a given position, for example all Defenders.

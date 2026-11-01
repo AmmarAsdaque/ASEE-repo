@@ -1,0 +1,1 @@
+Add an endpoint that returns only the players in the starting eleven.
