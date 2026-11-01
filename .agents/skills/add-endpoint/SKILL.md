@@ -13,7 +13,8 @@ description: Adds a REST endpoint to the players API with a service function, a 
 2. Write the tests first, in `tests/test_main.py` (never a new file), under a
    new section comment `# GET /players/<path> ---`. Follow the existing names
    and Arrange/Act/Assert style. Cover the success case, the no-match case and
-   one bad-input case, using the seeded data (26 players). Run
+   one bad-input case, using the seeded data (26 players); if a test creates or
+   changes players, follow the integration-tests skill. Run
    `uv run pytest -q`; the new tests must fail.
 3. Add an async function in `services/player_service.py` that builds the query
    with `select(Player).where(...)`.
