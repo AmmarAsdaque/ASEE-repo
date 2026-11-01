@@ -11,6 +11,7 @@ Features:
 Endpoints:
 - POST /players/                          : Create a new Player.
 - GET /players/                           : Retrieve all Players.
+- GET /players/starting11                 : Retrieve starting Players.
 - GET /players/count                      : Count all Players.
 - GET /players/{player_id}                : Retrieve Player by UUID
                                             (surrogate key, internal).
@@ -151,6 +152,20 @@ async def get_count_async(
 ) -> dict[str, int]:
     """Return the total number of players."""
     return {"count": await player_service.count_async(async_session)}
+
+
+@api_router.get(
+    "/players/starting11",
+    response_model=List[PlayerResponseModel],
+    status_code=status.HTTP_200_OK,
+    summary="Retrieves Players in the starting 11",
+    tags=["Players"],
+)
+async def get_starting11_async(
+    async_session: Annotated[AsyncSession, Depends(generate_async_session)],
+) -> List[PlayerResponseModel]:
+    """Return players whose starting11 flag is true."""
+    return await player_service.retrieve_starting11_async(async_session)
 
 
 @api_router.get(

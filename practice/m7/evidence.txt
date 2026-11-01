@@ -1,0 +1,73 @@
+== RUN 1: sensor fails ==
+commit: e5088ab
+command: uv run pytest tests/test_architecture.py -q
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________________ test_routes_do_not_touch_the_database_layer __________________
+
+    def test_routes_do_not_touch_the_database_layer():
+        problems = [p for path in sorted(ROUTES.glob("*.py")) for p in problems_in(path)]
+>       assert not problems, (
+            "ARCHITECTURE RULE: routes/ must not import the table model or SQL tools, "
+            "and must not run queries.\n"
+            + "\n".join(problems)
+            + "\nHOW TO FIX: move the query into an async function in "
+            "services/player_service.py (add one if it does not exist yet, e.g. "
+            "retrieve_<what>_async(async_session)) and call it from the route. "
+            "Do not delete or edit this test. See AGENTS.md, section 'Boundaries'."
+        )
+E       AssertionError: ARCHITECTURE RULE: routes/ must not import the table model or SQL tools, and must not run queries.
+E         player_route.py:42 imports sqlalchemy
+E         player_route.py:43 imports schemas.player_schema
+E         player_route.py:170 calls .execute()
+E         player_route.py:173 calls .scalars()
+E         HOW TO FIX: move the query into an async function in services/player_service.py (add one if it does not exist yet, e.g. retrieve_<what>_async(async_session)) and call it from the route. Do not delete or edit this test. See AGENTS.md, section 'Boundaries'.
+E       assert not ['player_route.py:42 imports sqlalchemy', 'player_route.py:43 imports schemas.player_schema', 'player_route.py:170 calls .execute()', 'player_route.py:173 calls .scalars()']
+
+tests/test_architecture.py:39: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+=========================== short test summary info ============================
+FAILED tests/test_architecture.py::test_routes_do_not_touch_the_database_layer
+1 failed in 2.34s
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________________ test_routes_do_not_touch_the_database_layer __________________
+
+    def test_routes_do_not_touch_the_database_layer():
+        problems = [p for path in sorted(ROUTES.glob("*.py")) for p in problems_in(path)]
+>       assert not problems, (
+            "ARCHITECTURE RULE: routes/ must not import the table model or SQL tools, "
+            "and must not run queries.\n"
+            + "\n".join(problems)
+            + "\nHOW TO FIX: move the query into an async function in "
+            "services/player_service.py (add one if it does not exist yet, e.g. "
+            "retrieve_<what>_async(async_session)) and call it from the route. "
+            "Do not delete or edit this test. See AGENTS.md, section 'Boundaries'."
+        )
+E       AssertionError: ARCHITECTURE RULE: routes/ must not import the table model or SQL tools, and must not run queries.
+E         player_route.py:42 imports sqlalchemy
+E         player_route.py:43 imports schemas.player_schema
+E         player_route.py:170 calls .execute()
+E         player_route.py:173 calls .scalars()
+E         HOW TO FIX: move the query into an async function in services/player_service.py (add one if it does not exist yet, e.g. retrieve_<what>_async(async_session)) and call it from the route. Do not delete or edit this test. See AGENTS.md, section 'Boundaries'.
+E       assert not ['player_route.py:42 imports sqlalchemy', 'player_route.py:43 imports schemas.player_schema', 'player_route.py:170 calls .execute()', 'player_route.py:173 calls .scalars()']
+
+tests/test_architecture.py:39: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+=========================== short test summary info ============================
+FAILED tests/test_architecture.py::test_routes_do_not_touch_the_database_layer
+1 failed in 2.52s
+
+== RUN 2: sensor passes after the agent's fix ==
+commit: 82a3e8a
+command: uv run pytest tests/test_architecture.py -q
+.                                                                        [100%]
+1 passed in 0.18s
+full suite: 47 passed in 1.52s
+
+Agent session with the catch: runs/sensor-catch.md
+First attempt (feature task) followed the rule unprompted; mistake planted in a separate commit, then fixed by the agent from the sensor message alone.

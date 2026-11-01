@@ -84,6 +84,13 @@ async def retrieve_all_async(async_session: AsyncSession) -> List[Player]:
     return players
 
 
+async def retrieve_starting11_async(async_session: AsyncSession) -> List[Player]:
+    """Retrieve only players whose starting11 flag is true."""
+    statement = select(Player).where(Player.starting11.is_(True))
+    result = await async_session.execute(statement)
+    return result.scalars().all()
+
+
 def paginate_players(players: List[Player], page: int, size: int) -> List[Player]:
     """Return a page without changing the complete collection or its order."""
     offset = (page - 1) * size

@@ -4,6 +4,7 @@ Test suite for the /players/ API endpoints.
 Covers:
 - GET    /health/
 - GET    /players/
+- GET    /players/starting11
 - GET    /players/{player_id}
 - GET    /players/squadnumber/{squad_number}
 - POST   /players/
@@ -610,3 +611,49 @@ def test_c6_unknown_player_fixture_is_valid_and_unused(client):
     # Assert
     assert 1 <= squad_number <= 99
     assert response.status_code == 404
+
+
+# GET /players/starting11 ------------------------------------------------------
+
+
+def test_request_get_players_starting11_seeded_response_matching_players(client):
+    # Arrange
+    players = client.get(PATH).json()
+    expected = [player for player in players if player["starting11"] is True]
+    assert expected
+    assert len(expected) < len(players)
+    # Act
+    response = client.get(PATH + "starting11")
+    # Assert
+    assert response.status_code == 200
+    assert response.json() == expected
+
+
+def test_request_get_players_starting11_empty_response_empty_list(client):
+    # Arrange
+    from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+
+    from databases.player_database import Base, generate_async_session
+    from main import app
+
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
+
+    async def create_tables():
+        async with engine.begin() as connection:
+            await connection.run_sync(Base.metadata.create_all)
+
+    async def empty_session():
+        async with AsyncSession(engine) as session:
+            yield session
+
+    client.portal.call(create_tables)
+    app.dependency_overrides[generate_async_session] = empty_session
+    try:
+        # Act
+        response = client.get(PATH + "starting11")
+        # Assert
+        assert response.status_code == 200
+        assert response.json() == []
+    finally:
+        app.dependency_overrides.pop(generate_async_session)
+        client.portal.call(engine.dispose)
