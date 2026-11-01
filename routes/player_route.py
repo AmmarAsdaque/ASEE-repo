@@ -39,8 +39,6 @@ from aiocache import SimpleMemoryCache
 from databases.player_database import generate_async_session
 from models.player_model import PlayerRequestModel, PlayerResponseModel
 from services import player_service
-from sqlalchemy import select
-from schemas.player_schema import Player
 
 api_router = APIRouter()
 simple_memory_cache = SimpleMemoryCache()
@@ -167,10 +165,7 @@ async def get_starting11_async(
     async_session: Annotated[AsyncSession, Depends(generate_async_session)],
 ) -> List[PlayerResponseModel]:
     """Return players whose starting11 flag is true."""
-    result = await async_session.execute(
-        select(Player).where(Player.starting11.is_(True))
-    )
-    return result.scalars().all()
+    return await player_service.retrieve_starting11_async(async_session)
 
 
 @api_router.get(
