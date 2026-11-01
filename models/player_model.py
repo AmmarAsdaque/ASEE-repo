@@ -19,8 +19,14 @@ These models are used for data validation and serialization in the API.
 
 from typing import Optional
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 from pydantic.alias_generators import to_camel
+
+
+def validate_squad_number(value: int) -> int:
+    if value < 1 or value > 99:
+        raise ValueError("squad_number must be between 1 and 99")
+    return value
 
 
 class MainModel(BaseModel):
@@ -73,6 +79,11 @@ class PlayerRequestModel(MainModel):
     team: Optional[str] = None
     league: Optional[str] = None
     starting11: Optional[bool] = None
+
+    @field_validator("squad_number")
+    @classmethod
+    def validate_squad_number_field(cls, value: int) -> int:
+        return validate_squad_number(value)
 
 
 class PlayerResponseModel(MainModel):
