@@ -1,0 +1,96 @@
+commit 6422e336ef9f0383d3489761de29c63843fa5f7f
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 22:07:58 +0500
+
+    chore: record setup commit in manifest
+
+ .claude/commands/pre-commit.md                     |   40 +-
+ .claude/commands/pre-release.md                    |  176 +-
+ .claude/settings.json                              |   20 +-
+ .claude/skills/add-endpoint/SKILL.md               |   34 +-
+ .claude/skills/create-issue/SKILL.md               |   26 +-
+ .coderabbit.yaml                                   |  788 ++---
+ .coveragerc                                        |   30 +-
+ .dockerignore                                      |   60 +-
+ .flake8                                            |   22 +-
+ .github/ISSUE_TEMPLATE/bug_report.md               |   80 +-
+ .github/ISSUE_TEMPLATE/config.yml                  |    2 +-
+ .github/ISSUE_TEMPLATE/feature_request.md          |   64 +-
+ .github/dependabot.yml                             |   46 +-
+ .github/pull_request_template.md                   |   42 +-
+ .github/workflows/codeql.yml                       |   86 +-
+ .github/workflows/python-cd.yml                    |  396 +--
+ .github/workflows/python-ci.yml                    |  212 +-
+ .gitignore                                         |  344 +-
+ .markdownlint.json                                 |   12 +-
+ .pylintrc                                          |   14 +-
+ .python-version                                    |    2 +-
+ .sonarcloud.properties                             |  116 +-
+ .vscode/extensions.json                            |  102 +-
+ .vscode/launch.json                                |   36 +-
+ .vscode/settings.json                              |  112 +-
+ CHANGELOG.md                                       |  610 ++--
+ CLAUDE.md                                          |  330 +-
+ CODE_OF_CONDUCT.md                                 |  256 +-
+ CONTRIBUTING.md                                    |  184 +-
+ Dockerfile                                         |  168 +-
+ LICENSE                                            |   40 +-
+ README.md                                          |  588 ++--
+ RELEASES.md                                        |  148 +-
+ alembic.ini                                        |  224 +-
+ alembic/README                                     |    2 +-
+ alembic/env.py                                     |  156 +-
+ alembic/script.py.mako                             |   52 +-
+ alembic/versions/001_create_players_table.py       |   80 +-
+ alembic/versions/002_seed_starting11.py            |  170 +-
+ alembic/versions/003_seed_substitutes.py           |  208 +-
+ codecov.yaml                                       |   22 +-
+ codecov.yml                                        |  110 +-
+ commitlint.config.mjs                              |   28 +-
+ compose.yaml                                       |   40 +-
+ databases/player_database.py                       |  124 +-
+ docs/adr/0001-sqlite-as-database-engine.md         |  116 +-
+ docs/adr/0002-no-alembic-manual-seed-scripts.md    |  110 +-
+ docs/adr/0003-uuid-surrogate-primary-key.md        |  138 +-
+ docs/adr/0004-squad-number-as-mutation-key.md      |  132 +-
+ docs/adr/0005-full-replace-put-no-patch.md         |  116 +-
+ docs/adr/0006-in-memory-caching-with-aiocache.md   |  128 +-
+ docs/adr/0007-integration-only-test-strategy.md    |  134 +-
+ docs/adr/0008-layered-architecture.md              |  188 +-
+ docs/adr/0009-docker-and-compose-strategy.md       |  190 +-
+ ...10-alembic-migration-based-schema-management.md |  166 +-
+ docs/adr/0011-coach-themed-versioning.md           |  154 +-
+ docs/adr/0012-ai-assisted-development-workflow.md  |  152 +-
+ docs/adr/0013-spec-driven-development.md           |  122 +-
+ docs/adr/README.md                                 |   54 +-
+ docs/adr/template.md                               |   78 +-
+ gunicorn.conf.py                                   |   50 +-
+ main.py                                            |   86 +-
+ manifest.yaml                                      |    2 +-
+ models/player_model.py                             |  218 +-
+ pyproject.toml                                     |  108 +-
+ rest/players.rest                                  |  196 +-
+ routes/health_route.py                             |   38 +-
+ routes/player_route.py                             |  558 ++--
+ schemas/player_schema.py                           |  212 +-
+ scripts/entrypoint.sh                              |   54 +-
+ scripts/healthcheck.sh                             |   10 +-
+ services/player_service.py                         |  370 +-
+ tests/conftest.py                                  |  100 +-
+ tests/player_fake.py                               |  180 +-
+ tests/test_main.py                                 |  624 ++--
+ tests/test_migrations.py                           |  146 +-
+ tools/seed_001_starting_eleven.py                  |  608 ++--
+ tools/seed_002_substitutes.py                      |  640 ++--
+ uv.lock                                            | 3524 ++++++++++----------
+ 79 files changed, 8052 insertions(+), 8052 deletions(-)
+
+commit f341a7666a54dae9a0cb90cc25979c450f1ae151
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 22:05:32 +0500
+
+    chore: course setup
+
+ manifest.yaml      | 13 +++++++++++++
+ runs/setup-test.md | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+)

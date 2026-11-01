@@ -21,7 +21,16 @@ Endpoints:
 
 from typing import Annotated, List
 from uuid import UUID
-from fastapi import APIRouter, Body, Depends, HTTPException, status, Path, Response
+from fastapi import (
+    APIRouter,
+    Body,
+    Depends,
+    HTTPException,
+    status,
+    Path,
+    Query,
+    Response,
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 from aiocache import SimpleMemoryCache
 
@@ -102,6 +111,8 @@ async def post_async(
 async def get_all_async(
     response: Response,
     async_session: Annotated[AsyncSession, Depends(generate_async_session)],
+    page: Annotated[int | None, Query(ge=1)] = None,
+    size: Annotated[int | None, Query(ge=1, le=100)] = None,
 ) -> List[PlayerResponseModel]:
     """
     Endpoint to retrieve all players.
@@ -112,11 +123,17 @@ async def get_all_async(
     Returns:
         List[PlayerResponseModel]: A list of Pydantic models representing all players.
     """
-    players = await simple_memory_cache.get(CACHE_KEY)
+    paginated = page is not None or size is not None
+    page = page if page is not None else 1
+    size = size if size is not None else 20
+    cache_key = f"{CACHE_KEY}:page={page}:size={size}" if paginated else CACHE_KEY
+    players = await simple_memory_cache.get(cache_key)
     response.headers["X-Cache"] = "HIT"
     if players is None:
         players = await player_service.retrieve_all_async(async_session)
-        await simple_memory_cache.set(CACHE_KEY, players, ttl=CACHE_TTL)
+        if paginated:
+            players = player_service.paginate_players(players, page, size)
+        await simple_memory_cache.set(cache_key, players, ttl=CACHE_TTL)
         response.headers["X-Cache"] = "MISS"
     return players
 

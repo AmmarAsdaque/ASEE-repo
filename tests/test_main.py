@@ -310,3 +310,124 @@ def test_request_post_player_body_nonexistent_response_header_location(client):
         )
     finally:
         client.delete(PATH + "squadnumber/" + str(player.squad_number))
+
+
+# GET /players/?page=&size= -----------------------------------------------------
+
+
+def test_request_get_players_ac1_response_ten_players(client):
+    # Arrange
+    params = {"page": 1, "size": 10}
+    # Act
+    response = client.get(PATH, params=params)
+    # Assert
+    assert response.status_code == 200
+    assert len(response.json()) == 10
+
+
+def test_request_get_players_ac2_response_complete_order(client):
+    # Arrange
+    complete = client.get(PATH).json()
+    # Act
+    pages = [client.get(PATH, params={"page": p, "size": 10}) for p in (1, 2, 3)]
+    combined = [player for response in pages for player in response.json()]
+    # Assert
+    assert all(response.status_code == 200 for response in pages)
+    assert combined == complete
+    assert len({player["id"] for player in combined}) == 26
+
+
+def test_request_get_players_ac3_response_last_and_empty_pages(client):
+    # Arrange
+    complete = client.get(PATH).json()
+    # Act
+    last = client.get(PATH, params={"page": 3, "size": 10})
+    beyond = client.get(PATH, params={"page": 4, "size": 10})
+    # Assert
+    assert last.status_code == beyond.status_code == 200
+    assert len(last.json()) == 6
+    assert last.json() == complete[20:]
+    assert beyond.json() == []
+
+
+def test_request_get_players_ac4_response_default_parameters(client):
+    # Arrange
+    complete = client.get(PATH).json()
+    # Act
+    page_only = client.get(PATH, params={"page": 2})
+    size_only = client.get(PATH, params={"size": 10})
+    # Assert
+    assert page_only.status_code == size_only.status_code == 200
+    assert page_only.json() == complete[20:26]
+    assert size_only.json() == complete[:10]
+
+
+def test_request_get_players_ac5_response_unprocessable(client):
+    # Arrange
+    invalid = ["size=0", "size=101", "size=abc", "page=0", "page=-1"]
+    # Act
+    responses = [client.get(PATH + "?" + query) for query in invalid]
+    # Assert
+    assert all(response.status_code == 422 for response in responses)
+
+
+def test_request_get_players_ac6_response_isolated_cache(client):
+    # Arrange
+    from routes.player_route import CACHE_KEY, simple_memory_cache
+
+    client.portal.call(simple_memory_cache.clear, CACHE_KEY)
+    complete = client.get(PATH).json()
+    # Act
+    first = client.get(PATH, params={"page": 1, "size": 10})
+    second = client.get(PATH, params={"page": 2, "size": 10})
+    first_hit = client.get(PATH, params={"page": 1, "size": 10})
+    second_hit = client.get(PATH, params={"page": 2, "size": 10})
+    full = client.get(PATH)
+    # Assert
+    assert first.status_code == second.status_code == full.status_code == 200
+    assert first.json() == complete[:10]
+    assert second.json() == complete[10:20]
+    assert {p["id"] for p in first.json()}.isdisjoint(p["id"] for p in second.json())
+    assert first.headers["X-Cache"] == second.headers["X-Cache"] == "MISS"
+    assert first_hit.headers["X-Cache"] == second_hit.headers["X-Cache"] == "HIT"
+    assert first_hit.json() == first.json()
+    assert second_hit.json() == second.json()
+    assert len(full.json()) == 26
+    assert full.json() == complete
+
+
+def test_request_get_players_ac7_response_unchanged_full_list(client):
+    # Arrange
+    from routes.player_route import CACHE_KEY, simple_memory_cache
+
+    client.portal.call(simple_memory_cache.clear, CACHE_KEY)
+    # Act
+    miss = client.get(PATH)
+    hit = client.get(PATH)
+    # Assert
+    assert miss.status_code == hit.status_code == 200
+    assert len(miss.json()) == 26
+    assert miss.json() == hit.json()
+    assert miss.headers["X-Cache"] == "MISS"
+    assert hit.headers["X-Cache"] == "HIT"
+
+
+def test_request_get_players_ac8_response_page_cache_cleared_after_write(client):
+    # Arrange
+    player = nonexistent_player()
+    params = {"page": 2, "size": 20}
+    try:
+        before = client.get(PATH, params=params)
+        assert before.status_code == 200
+        assert len(before.json()) == 6
+        # Act
+        created = client.post(PATH, json=player.__dict__)
+        after = client.get(PATH, params=params)
+        # Assert
+        assert created.status_code == 201
+        assert after.status_code == 200
+        assert len(after.json()) == 7
+        assert created.json() in after.json()
+        assert after.headers["X-Cache"] == "MISS"
+    finally:
+        client.delete(PATH + "squadnumber/" + str(player.squad_number))
