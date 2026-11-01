@@ -1,0 +1,18 @@
+learner_id: "25280060"
+assignment: "a2"
+repository:
+  url: "https://github.com/AmmarAsdaque/ASEE-repo"
+  branch: "course-work"
+  language: "Python"
+commits:
+  - "a4928db"   # spec
+  - "44097bb"   # tests for criteria 1-6 (failing); unknown_player 999 -> 98
+  - "5613281"   # test: format A2 tests with black (layout only)
+  - "ef92472"   # plan with corrections
+  - "5b363a9"   # implementation (agent)
+  - "f07c45e"   # test: anchor squad number error messages
+agent_tool:
+  name: "Codex"
+  model: "GPT-6.1-Sol"
+  tier: "paid"
+notes: "Fork of nanotaboada/python-samples-fastapi-restful (uv; flake8 + black). Mutation run scoped to models/player_model.py and the unit test test_c3_validate_squad_number_boundaries (API tests hang under mutmut). mutmut run via 'uv run --with mutmut' so it is not a project dependency. Holdout kept in ~/holdouts/a2 until the end."

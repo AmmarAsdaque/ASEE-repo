@@ -1,0 +1,33 @@
+== BEFORE ==
+mutmut, version 3.8.1
+{
+    "killed": 7,
+    "survived": 1,
+    "total": 8,
+    "no_tests": 0,
+    "skipped": 0,
+    "suspicious": 0,
+    "timeout": 0,
+    "check_was_interrupted_by_user": 0,
+    "segfault": 0
+}
+killed 7 / survived 1
+Mutation score: 7/8 = 87.5%
+Surviving mutants:
+    models.player_model.x_validate_squad_number__mutmut_7: survived
+== AFTER ==
+mutmut, version 3.8.1
+{
+    "killed": 8,
+    "survived": 0,
+    "total": 8,
+    "no_tests": 0,
+    "skipped": 0,
+    "suspicious": 0,
+    "timeout": 0,
+    "check_was_interrupted_by_user": 0,
+    "segfault": 0
+}
+killed 8 / survived 0
+Mutation score: 8/8 = 100.0%
+Surviving mutants:

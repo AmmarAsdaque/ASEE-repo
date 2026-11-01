@@ -1,0 +1,55 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.3, pytest-9.1.1, pluggy-1.6.0 -- /mnt/d/ASEE-Repo/ASEE-repo/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /mnt/d/ASEE-Repo/ASEE-repo
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.14.2, cov-7.1.0
+collecting ... collected 44 items
+
+tests/test_main.py::test_request_get_health_response_status_ok PASSED    [  2%]
+tests/test_main.py::test_request_get_health_version_response_app_version PASSED [  4%]
+tests/test_main.py::test_request_get_players_response_header_cache_miss PASSED [  6%]
+tests/test_main.py::test_request_get_players_response_header_cache_hit PASSED [  9%]
+tests/test_main.py::test_request_get_players_response_status_ok PASSED   [ 11%]
+tests/test_main.py::test_request_get_players_response_body_each_player_has_uuid PASSED [ 13%]
+tests/test_main.py::test_request_get_player_id_unknown_response_status_not_found PASSED [ 15%]
+tests/test_main.py::test_request_get_player_id_existing_response_status_ok PASSED [ 18%]
+tests/test_main.py::test_request_get_player_id_existing_response_body_player_match PASSED [ 20%]
+tests/test_main.py::test_request_get_player_squadnumber_nonexistent_response_status_not_found PASSED [ 22%]
+tests/test_main.py::test_request_get_player_squadnumber_existing_response_status_ok PASSED [ 25%]
+tests/test_main.py::test_request_get_player_squadnumber_existing_response_body_player_match PASSED [ 27%]
+tests/test_main.py::test_request_post_player_body_empty_response_status_unprocessable PASSED [ 29%]
+tests/test_main.py::test_request_post_player_body_existing_response_status_conflict PASSED [ 31%]
+tests/test_main.py::test_request_post_player_body_existing_response_body_detail PASSED [ 34%]
+tests/test_main.py::test_request_post_player_body_nonexistent_response_status_created PASSED [ 36%]
+tests/test_main.py::test_request_put_player_squadnumber_existing_body_empty_response_status_unprocessable PASSED [ 38%]
+tests/test_main.py::test_request_put_player_squadnumber_unknown_response_status_not_found PASSED [ 40%]
+tests/test_main.py::test_request_put_player_squadnumber_existing_response_status_no_content PASSED [ 43%]
+tests/test_main.py::test_request_put_player_squadnumber_mismatch_response_status_bad_request PASSED [ 45%]
+tests/test_main.py::test_request_delete_player_squadnumber_unknown_response_status_not_found PASSED [ 47%]
+tests/test_main.py::test_request_delete_player_squadnumber_existing_response_status_no_content PASSED [ 50%]
+tests/test_main.py::test_request_post_player_body_nonexistent_response_header_location PASSED [ 52%]
+tests/test_main.py::test_request_get_players_ac1_response_ten_players PASSED [ 54%]
+tests/test_main.py::test_request_get_players_ac2_response_complete_order PASSED [ 56%]
+tests/test_main.py::test_request_get_players_ac3_response_last_and_empty_pages PASSED [ 59%]
+tests/test_main.py::test_request_get_players_ac4_response_default_parameters PASSED [ 61%]
+tests/test_main.py::test_request_get_players_ac5_response_unprocessable PASSED [ 63%]
+tests/test_main.py::test_request_get_players_ac6_response_isolated_cache PASSED [ 65%]
+tests/test_main.py::test_request_get_players_ac7_response_unchanged_full_list PASSED [ 68%]
+tests/test_main.py::test_request_get_players_ac8_response_page_cache_cleared_after_write PASSED [ 70%]
+tests/test_main.py::test_request_get_players_count_seeded_response_count PASSED [ 72%]
+tests/test_main.py::test_request_get_players_count_writes_response_updated_count PASSED [ 75%]
+tests/test_main.py::test_request_get_players_count_empty_response_zero PASSED [ 77%]
+tests/test_main.py::test_c1_request_post_player_squadnumber_zero_response_status_unprocessable PASSED [ 79%]
+tests/test_main.py::test_c2_request_post_player_squadnumber_hundred_response_status_unprocessable PASSED [ 81%]
+tests/test_main.py::test_c3_validate_squad_number_boundaries PASSED      [ 84%]
+tests/test_main.py::test_c3_request_post_player_squadnumber_ninety_nine_response_status_created PASSED [ 86%]
+tests/test_main.py::test_c4_request_put_player_squadnumber_hundred_response_status_unprocessable PASSED [ 88%]
+tests/test_main.py::test_c5_request_post_player_squadnumber_invalid_response_body_detail PASSED [ 90%]
+tests/test_main.py::test_c6_unknown_player_fixture_is_valid_and_unused PASSED [ 93%]
+tests/test_migrations.py::test_migration_downgrade_003_removes_substitutes_only PASSED [ 95%]
+tests/test_migrations.py::test_migration_downgrade_002_removes_starting11_only PASSED [ 97%]
+tests/test_migrations.py::test_migration_downgrade_001_drops_players_table PASSED [100%]
+
+============================== 44 passed in 1.48s ==============================
