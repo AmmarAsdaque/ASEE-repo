@@ -1,0 +1,25 @@
+learner_id: "25280060"
+assignment: "capstone"
+repository:
+  url: "https://github.com/AmmarAsdaque/ASEE-repo"
+  branch: "course-work"
+  language: "Python"
+commits:
+  - "6c6844d"   # part 1: structural sensor added (routes must not touch the database layer)
+  - "e5088ab"   # part 1: planted violation, sensor fails
+  - "82a3e8a"   # part 1: agent's fix, sensor passes
+  - "f8b5a5b"   # part 1: sensor evidence
+  - "0e2a52e"   # part 1: AGENTS.md revised (harness retrospective)
+  - "5576dc5"   # part 1: integration-tests skill (origin: m5 AC8 cleanup correction)
+  - "36d0ad6"   # part 1: skill check run
+  - "8747b98"   # part 1: capstone folder (guides, skill, sensor, evidence)
+  - "cdbea66"   # part 2: threat model, safety config and mitigation check
+  - "f7ac947"   # part 2: AGENTS.md with team conventions
+  - "0611a60"   # part 2: spec for position filter
+  - "1fff497"   # part 2: delivery run (feat: filter GET /players/ by position)
+  - "3e4c002"   # part 2: report
+agent_tool:
+  name: "Codex"
+  model: "GPT-6.1-Sol"
+  tier: "paid"
+notes: "Fork of nanotaboada/python-samples-fastapi-restful (uv; flake8 + black). Codex CLI 0.166.0 with the Module 9 safety config (connectors and web search off, network tools and git push forbidden). Holdout kept in ~/holdouts/capstone until the end; it passed on first run."
