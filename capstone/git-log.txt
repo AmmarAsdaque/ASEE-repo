@@ -1,0 +1,657 @@
+commit bfecdb9692589d5ba19523a9c43575549aa31a12
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 21:04:51 +0500
+
+    capstone: manifest
+
+ capstone/manifest.yaml | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+commit 3e4c002b177e5030982edd403cefb32f13fad49b
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 21:03:21 +0500
+
+    capstone: report
+
+ capstone/report.md | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+commit 1fff4978bc8708439270d600d4b05b936dbfdc17
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 21:03:18 +0500
+
+    feat: filter GET /players/ by position (capstone delivery run)
+
+ capstone/interventions.md  |  15 +++++
+ capstone/plan.md           |  71 +++++++++++++++++++++++
+ capstone/runs/delivery.md  | 111 ++++++++++++++++++++++++++++++++++++
+ routes/player_route.py     |  12 +++-
+ runs/delivery.md           | 111 ++++++++++++++++++++++++++++++++++++
+ services/player_service.py |   6 +-
+ tests/test_main.py         | 136 +++++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 458 insertions(+), 4 deletions(-)
+
+commit 0611a60e0cfa0244c871c510dd08ded6810be5a8
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 20:39:49 +0500
+
+    capstone: spec for position filter
+
+ capstone/spec.md     |  33 ++++++++++
+ runs/m9-inventory.md | 170 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 203 insertions(+)
+
+commit 29e0e4bcb54f3a0bfda7e9738a5e1c643f97b7fd
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 20:23:21 +0500
+
+    m10: measurement plan and first log rows
+
+ practice/m10/PLAN.md | 19 +++++++++++++++++++
+ practice/m10/log.csv |  7 +++++++
+ 2 files changed, 26 insertions(+)
+
+commit f7ac947831aa7983ed6bd2f4dde7f221e597a61b
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 20:22:12 +0500
+
+    capstone: AGENTS.md with team conventions
+
+ capstone/AGENTS.md | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit 1d057a200a4988c4ecb7214d774708f2a5eb81a5
+Merge: cdbea66 f3e6fd1
+Author: Syed Ammar Asdaque <97606319+AmmarAsdaque@users.noreply.github.com>
+Date:   2026-11-01 20:21:00 +0500
+
+    Merge pull request #1 from AmmarAsdaque/team-conventions
+    
+       Team conventions for agent work (Module 10, Exercise 2): team rules and 4 failure-pattern lines in AGENTS.md, a skill library index and changelogs, and an AI-disclosure block in the PR template.
+
+commit f3e6fd10592eeb379d04d204960718fe3df06fd3
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 20:10:46 +0500
+
+    docs: team conventions for agent work
+
+ .agents/skills/README.md                      | 11 +++++++++++
+ .agents/skills/add-endpoint/CHANGELOG.md      |  4 ++++
+ .agents/skills/integration-tests/CHANGELOG.md |  3 +++
+ .github/pull_request_template.md              | 16 ++++++++++++++++
+ AGENTS.md                                     |  7 +++++++
+ 5 files changed, 41 insertions(+)
+
+commit cdbea66335e044c398ca5e0354f04e9b4d242d73
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 19:03:49 +0500
+
+    capstone: threat model, safety config and mitigation check
+
+ capstone/runs/m9-mitigation-check.md    |  18 +++++
+ capstone/safety-config/README.md        |  27 ++++++++
+ capstone/safety-config/config.toml      |  22 ++++++
+ capstone/safety-config/default.rules    |   0
+ capstone/safety-config/m5.rules         |  15 ++++
+ capstone/safety-config/m9-network.rules |   6 ++
+ capstone/threat-model.md                | 118 ++++++++++++++++++++++++++++++++
+ runs/m9-mitigation-check.md             |  18 +++++
+ 8 files changed, 224 insertions(+)
+
+commit 8747b983ae794eeec180ebcb785a5cd146a956fa
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 17:16:50 +0500
+
+    capstone part 1: revised AGENTS.md, integration-tests skill, sensor and evidence
+
+ capstone/AGENTS.md                         |  76 ++++++++++++++++++++
+ capstone/runs/capstone-skill-check.md      |  63 +++++++++++++++++
+ capstone/runs/sensor-catch.md              | 107 +++++++++++++++++++++++++++++
+ capstone/sensors/evidence.txt              |  73 ++++++++++++++++++++
+ capstone/sensors/test_architecture.py      |  47 +++++++++++++
+ capstone/skills/integration-tests/SKILL.md |  44 ++++++++++++
+ 6 files changed, 410 insertions(+)
+
+commit 36d0ad66b6c9f4dfa11525495e83cb89d278a18d
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 17:16:31 +0500
+
+    test: create-then-fetch player by squad number (capstone skill check)
+
+ runs/capstone-skill-check.md | 63 ++++++++++++++++++++++++++++++++++++++++++++
+ tests/test_main.py           | 20 ++++++++++++++
+ 2 files changed, 83 insertions(+)
+
+commit 5576dc53ba5620b9a4edc2bd6fdad78a6a675dab
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 17:12:38 +0500
+
+    feat: add integration-tests skill (origin: m5 AC8 cleanup correction)
+
+ .agents/skills/add-endpoint/SKILL.md      |  3 ++-
+ .agents/skills/integration-tests/SKILL.md | 44 +++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 1 deletion(-)
+
+commit 4288570e32962a1d5764aff9a1b30bcddf21f0d6
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 17:08:55 +0500
+
+    m8: autonomy map
+
+ practice/m8/autonomy-map.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0543d5c0ec9cd29c2027c5d8d1c5391ac6ab5927
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 17:07:35 +0500
+
+    m8: autonomy map
+
+ practice/m8/autonomy-map.md | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+commit 7e8bd8b1fd8f3cef25cc3772c37cfa1f2bacbdd7
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 17:06:11 +0500
+
+    m8: where the time went (upstream issue #2 -> PR #563 -> v2.1.1)
+
+ practice/m8/where-time-went.md | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+
+commit 0e2a52e67253b4ae2892900bbe18a64c363e2bf4
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 16:08:26 +0500
+
+    m7: harness retrospective; fix AGENTS.md conflicts and drift, name the sensor
+
+ AGENTS.md                |  18 +++++---
+ practice/m7/retro.md     |  30 ++++++++++++++
+ runs/a1-task1-with.md    | 106 +++++++++++++++++++++++++++++++++++++++++++++++
+ runs/a1-task1-without.md |  54 ++++++++++++++++++++++++
+ runs/a1-task2-with.md    | 100 ++++++++++++++++++++++++++++++++++++++++++++
+ runs/a1-task2-without.md |  56 +++++++++++++++++++++++++
+ 6 files changed, 358 insertions(+), 6 deletions(-)
+
+commit d0df22075c7de8230dbc9cc938944f0a058e207b
+Merge: 7d8843d f8b5a5b
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 16:03:45 +0500
+
+    Merge branch 'feat/sensor' into course-work
+
+commit f8b5a5b92eca20c94838cfae63fcb09d750f9f2a
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 16:03:40 +0500
+
+    m7: sensor evidence
+
+ practice/m7/evidence.txt | 73 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
+
+commit 82a3e8ad9e2fab3355cfc8cc2bd07d56b45914be
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 16:02:35 +0500
+
+    fix: move starting11 query back to the service (caught by sensor)
+
+ routes/player_route.py |   7 +---
+ runs/sensor-catch.md   | 107 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 108 insertions(+), 6 deletions(-)
+
+commit e5088abd5f50ad62f89e7ccf3af0ea34b4ddf06f
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 15:59:54 +0500
+
+    chore: plant sensor violation in starting11 route (exercise 7.1)
+
+ routes/player_route.py | 657 +++++++++++++++++++++++++------------------------
+ 1 file changed, 331 insertions(+), 326 deletions(-)
+
+commit 373b72c7dc250dae9a2098f0d139d189cd7d59dc
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 15:57:12 +0500
+
+    feat: add GET /players/starting11
+
+ routes/player_route.py     | 15 +++++++++++++++
+ services/player_service.py |  7 +++++++
+ tests/test_main.py         | 47 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 69 insertions(+)
+
+commit 6c6844de1cecce8ea776771ce0dcf91b1fec846d
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 15:51:43 +0500
+
+    test: add structural sensor: routes must not touch the database layer
+
+ tests/test_architecture.py | 47 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+commit 7d8843df2f4884eff242057d95de961b61ab1637
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 15:20:48 +0500
+
+    a2: export git log
+
+ a2/git-log.txt | 418 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 418 insertions(+)
+
+commit b4894e52cc95051baf464dbabc1fc34e374f1b06
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 15:20:30 +0500
+
+    a2: results, holdout and report
+
+ a2/holdout.md           | 59 +++++++++++++++++++++++++++++++++++++++++++++++++
+ a2/manifest.yaml        | 18 +++++++++++++++
+ a2/report.md            | 22 ++++++++++++++++++
+ a2/results/mutation.txt | 33 +++++++++++++++++++++++++++
+ a2/results/tests.txt    | 55 +++++++++++++++++++++++++++++++++++++++++++++
+ a2/runs/a2-plan.md      | 50 +++++++++++++++++++++++++++++++++++++++++
+ runs/a2-plan.md         | 50 +++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 287 insertions(+)
+
+commit f07c45e6b5acd44c4932af82b0ce99b9506567ab
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 15:05:21 +0500
+
+    test: anchor squad number error messages to the exact text
+
+ tests/test_main.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 3fa7e26f6b9c5f664db273c63668109c47c87212
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 15:00:27 +0500
+
+    chore: mutmut config for A2
+
+ pyproject.toml | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit 40087657d8edb4678ee631887a21a3e4f9c5b279
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 14:58:44 +0500
+
+    chore: rename A2 implementation log to the required name
+
+ a2/runs/{implement.md => a2-implement.md} | 0
+ runs/{implement.md => a2-implement.md}    | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 5b363a9443f746d2c2faade6f9b9de864e3e562a
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 14:57:08 +0500
+
+    a2: implement squad number range (agent)
+
+ a2/runs/implement.md   | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ models/player_model.py | 13 ++++++++++-
+ runs/implement.md      | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 128 insertions(+), 1 deletion(-)
+
+commit ef92472b5a2c8626c2e25eabae12777bf0f21203
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 14:50:06 +0500
+
+    a2: agent plan with my corrections
+
+ a2/plan.md | 68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
+
+commit 561328110d91e0e3548418d4166ed46481c6024b
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 14:49:54 +0500
+
+    test: format A2 tests with black (layout only)
+
+ tests/test_main.py | 332 +++++++++++++++++++++++++++--------------------------
+ 1 file changed, 168 insertions(+), 164 deletions(-)
+
+commit 44097bbca308cd07aa220e05cce7ccd7cc621a9e
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 14:44:19 +0500
+
+    a2: tests for criteria 1-6 (failing); unknown_player 999 -> 98
+
+ tests/player_fake.py |   2 +-
+ tests/test_main.py   | 101 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 102 insertions(+), 1 deletion(-)
+
+commit a4928db54863f5550ccab9020fb3016da648be8f
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 14:42:42 +0500
+
+    a2: spec for squad number range
+
+ a2/spec.md | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+commit da2dc6343ac810e5b1214da5c698df856662b3de
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 13:17:10 +0500
+
+    m6: start five-task eval (T3 baseline)
+
+ practice/m6/evals.md | 15 +++++++++++
+ runs/m6-eval-T3.md   | 71 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 86 insertions(+)
+
+commit acdb67cd40e67b004d6ae55656dbd7a5facd6b8a
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 13:05:30 +0500
+
+    m6: exercise 6.1 notes
+
+ .gitignore           |  1 +
+ practice/m6/notes.md | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+)
+
+commit 1c92d3fa751649c1e542090c922dbdca254f5624
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 12:26:00 +0500
+
+    m5: extension notes (subagent and worktrees)
+
+ practice/m5/extension.md | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+commit 07f04074a19b6a1eda55bc6c4b85a9a66104be40
+Merge: d80e060 ef3f1d2
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 12:20:57 +0500
+
+    Merge branch 'feat/players-count' into course-work
+
+commit d80e060a67b5056f0bb67f0bc08931caeadeb36a
+Merge: a5d8cc4 33ee687
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 12:20:35 +0500
+
+    Merge branch 'feat/health-version' into course-work
+
+commit ef3f1d20b8abe4a9ad73e4d1cf28592bcc4803a3
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 12:20:21 +0500
+
+    feat: add GET /players/count
+
+ routes/player_route.py     | 15 +++++++++++
+ services/player_service.py |  8 +++++-
+ tests/test_main.py         | 63 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 85 insertions(+), 1 deletion(-)
+
+commit 33ee687a1e44b5eb26083bb79fbc2d921d7eb2ad
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 12:20:15 +0500
+
+    feat: add GET /health/version
+
+ routes/health_route.py |  8 +++++++-
+ tests/test_main.py     | 11 +++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+commit a5d8cc4ef10851a3eed745b5e89ebfcbb13b14f0
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 12:02:20 +0500
+
+    m5: session notes, rules and log
+
+ practice/m5/notes.md | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+commit 7d9775b40d388fef7a6d9c6f9acb5f633c08b110
+Merge: 99484fa 07f9fda
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 11:56:31 +0500
+
+    Merge branch 'feat/players-pagination' into course-work
+
+commit 07f9fdaa5dd48abd0ac217b8040d3a8a6456678f
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 11:56:19 +0500
+
+    feat: paginate GET /players/ (spec: specs/players-pagination.md)
+
+ git-log.txt                   |  96 +++++++++++++++++++++++++++++++++
+ practice/m5-codex.rules       |  15 ++++++
+ routes/player_route.py        |  23 ++++++--
+ runs/m5-players-pagination.md |  92 ++++++++++++++++++++++++++++++++
+ services/player_service.py    |   6 +++
+ tests/test_main.py            | 121 ++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 350 insertions(+), 3 deletions(-)
+
+commit 99484fa518c740700dd89840f886c2b0db272fde
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 08:16:09 +0500
+
+    feat: add add-endpoint skill
+
+ .agents/skills/add-endpoint/SKILL.md | 55 ++++++++++++++++++++++++++++++++++++
+ .gitignore                           | 13 ++++-----
+ 2 files changed, 61 insertions(+), 7 deletions(-)
+
+commit 5332039b35b44c7b901a1356287cf0f52a83a832
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 08:11:06 +0500
+
+    docs: add AGENTS.md
+
+ AGENTS.md | 70 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 70 insertions(+)
+
+commit 4b6d6ee7469510a1f0fd99950a46df5e8a462882
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 08:07:12 +0500
+
+    chore: ignore local tool folders
+
+ .gitignore | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 39fafd39f55ea5440eda5b2ee1c8d3c128c28da2
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 07:59:45 +0500
+
+    chore: ignore local tool folders
+
+ .gitignore | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+commit b886d1ce78468ab54d06deda829a51896d0ccab5
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 07:44:03 +0500
+
+    a1: move other-tool instruction files aside; save task prompts
+
+ {.claude => .claude.off}/commands/pre-commit.md       | 0
+ {.claude => .claude.off}/commands/pre-release.md      | 0
+ {.claude => .claude.off}/settings.json                | 0
+ {.claude => .claude.off}/skills/add-endpoint/SKILL.md | 0
+ {.claude => .claude.off}/skills/create-issue/SKILL.md | 0
+ CLAUDE.md => CLAUDE.md.off                            | 0
+ practice/a1/task1.txt                                 | 1 +
+ practice/a1/task2.txt                                 | 1 +
+ 8 files changed, 2 insertions(+)
+
+commit e6734e19e71697d11fcf9c1f30c13c6ed63ab056
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 07:41:44 +0500
+
+    m4: corrections list
+
+ practice/m4/corrections.md | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+commit 5a08f6ab1b1f39b976397b3ab4d4ffa1034c2a8a
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 00:00:58 +0500
+
+    m3: reviewed plan for players pagination
+
+ specs/players-pagination-plan.md | 92 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
+
+commit f096a531ab197d6c22516ef3eed81d8593a8ea1b
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-11-01 00:00:58 +0500
+
+    m3: spec adds cache-after-write criterion
+
+ specs/players-pagination.md | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit 10a0247cc425995a9ee4656977e3a058a2569ea5
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 23:51:39 +0500
+
+    m3: spec for players pagination
+
+ specs/players-pagination.md | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+commit 320cfcfd1099500035e6d26396981f682546451a
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 23:51:03 +0500
+
+    m3: prompt before/after
+
+ practice/m3/ex1-notes.md     |  5 +++++
+ practice/m3/prompt-after.md  | 32 ++++++++++++++++++++++++++++++++
+ practice/m3/prompt-before.md |  1 +
+ 3 files changed, 38 insertions(+)
+
+commit 9bbc843d3f022799dc3ec6f9af7a2fbecc5d3204
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 23:26:36 +0500
+
+    m2: tool check
+
+ runs/m2-tool-check.md | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+commit 3aea9c5810963c6387ed286b268237f26bd12388
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 23:21:52 +0500
+
+    m2: ladder exercise
+
+ practice/m2/ladder.md | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+commit c148dc376a09255d435a88b0a513e323b3119799
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 23:13:43 +0500
+
+    m1: three runs
+
+ practice/m1/three-runs.md |   4 ++
+ runs/m1-three-runs.md     | 117 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 121 insertions(+)
+
+commit b93aab6ee43ed33376a0cd87946e58e789cca55e
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 22:43:32 +0500
+
+    m1: three-runs prompt
+
+ practice/m1/prompt.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 6422e336ef9f0383d3489761de29c63843fa5f7f
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 22:07:58 +0500
+
+    chore: record setup commit in manifest
+
+ .claude/commands/pre-commit.md                     |   40 +-
+ .claude/commands/pre-release.md                    |  176 +-
+ .claude/settings.json                              |   20 +-
+ .claude/skills/add-endpoint/SKILL.md               |   34 +-
+ .claude/skills/create-issue/SKILL.md               |   26 +-
+ .coderabbit.yaml                                   |  788 ++---
+ .coveragerc                                        |   30 +-
+ .dockerignore                                      |   60 +-
+ .flake8                                            |   22 +-
+ .github/ISSUE_TEMPLATE/bug_report.md               |   80 +-
+ .github/ISSUE_TEMPLATE/config.yml                  |    2 +-
+ .github/ISSUE_TEMPLATE/feature_request.md          |   64 +-
+ .github/dependabot.yml                             |   46 +-
+ .github/pull_request_template.md                   |   42 +-
+ .github/workflows/codeql.yml                       |   86 +-
+ .github/workflows/python-cd.yml                    |  396 +--
+ .github/workflows/python-ci.yml                    |  212 +-
+ .gitignore                                         |  344 +-
+ .markdownlint.json                                 |   12 +-
+ .pylintrc                                          |   14 +-
+ .python-version                                    |    2 +-
+ .sonarcloud.properties                             |  116 +-
+ .vscode/extensions.json                            |  102 +-
+ .vscode/launch.json                                |   36 +-
+ .vscode/settings.json                              |  112 +-
+ CHANGELOG.md                                       |  610 ++--
+ CLAUDE.md                                          |  330 +-
+ CODE_OF_CONDUCT.md                                 |  256 +-
+ CONTRIBUTING.md                                    |  184 +-
+ Dockerfile                                         |  168 +-
+ LICENSE                                            |   40 +-
+ README.md                                          |  588 ++--
+ RELEASES.md                                        |  148 +-
+ alembic.ini                                        |  224 +-
+ alembic/README                                     |    2 +-
+ alembic/env.py                                     |  156 +-
+ alembic/script.py.mako                             |   52 +-
+ alembic/versions/001_create_players_table.py       |   80 +-
+ alembic/versions/002_seed_starting11.py            |  170 +-
+ alembic/versions/003_seed_substitutes.py           |  208 +-
+ codecov.yaml                                       |   22 +-
+ codecov.yml                                        |  110 +-
+ commitlint.config.mjs                              |   28 +-
+ compose.yaml                                       |   40 +-
+ databases/player_database.py                       |  124 +-
+ docs/adr/0001-sqlite-as-database-engine.md         |  116 +-
+ docs/adr/0002-no-alembic-manual-seed-scripts.md    |  110 +-
+ docs/adr/0003-uuid-surrogate-primary-key.md        |  138 +-
+ docs/adr/0004-squad-number-as-mutation-key.md      |  132 +-
+ docs/adr/0005-full-replace-put-no-patch.md         |  116 +-
+ docs/adr/0006-in-memory-caching-with-aiocache.md   |  128 +-
+ docs/adr/0007-integration-only-test-strategy.md    |  134 +-
+ docs/adr/0008-layered-architecture.md              |  188 +-
+ docs/adr/0009-docker-and-compose-strategy.md       |  190 +-
+ ...10-alembic-migration-based-schema-management.md |  166 +-
+ docs/adr/0011-coach-themed-versioning.md           |  154 +-
+ docs/adr/0012-ai-assisted-development-workflow.md  |  152 +-
+ docs/adr/0013-spec-driven-development.md           |  122 +-
+ docs/adr/README.md                                 |   54 +-
+ docs/adr/template.md                               |   78 +-
+ gunicorn.conf.py                                   |   50 +-
+ main.py                                            |   86 +-
+ manifest.yaml                                      |    2 +-
+ models/player_model.py                             |  218 +-
+ pyproject.toml                                     |  108 +-
+ rest/players.rest                                  |  196 +-
+ routes/health_route.py                             |   38 +-
+ routes/player_route.py                             |  558 ++--
+ schemas/player_schema.py                           |  212 +-
+ scripts/entrypoint.sh                              |   54 +-
+ scripts/healthcheck.sh                             |   10 +-
+ services/player_service.py                         |  370 +-
+ tests/conftest.py                                  |  100 +-
+ tests/player_fake.py                               |  180 +-
+ tests/test_main.py                                 |  624 ++--
+ tests/test_migrations.py                           |  146 +-
+ tools/seed_001_starting_eleven.py                  |  608 ++--
+ tools/seed_002_substitutes.py                      |  640 ++--
+ uv.lock                                            | 3524 ++++++++++----------
+ 79 files changed, 8052 insertions(+), 8052 deletions(-)
+
+commit f341a7666a54dae9a0cb90cc25979c450f1ae151
+Author: AmmarAsdaque <ammarasdaque@gmail.com>
+Date:   2026-10-31 22:05:32 +0500
+
+    chore: course setup
+
+ manifest.yaml      | 13 +++++++++++++
+ runs/setup-test.md | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+)
