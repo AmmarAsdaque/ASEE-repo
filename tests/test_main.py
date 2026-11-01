@@ -677,3 +677,139 @@ def test_request_get_players_starting11_empty_response_empty_list(client):
     finally:
         app.dependency_overrides.pop(generate_async_session)
         client.portal.call(engine.dispose)
+
+
+# GET /players/?position= ------------------------------------------------------
+
+
+def test_request_get_players_position_ac1_response_goalkeepers(client):
+    # Arrange
+    expected = [p for p in client.get(PATH).json() if p["position"] == "Goalkeeper"]
+    # Act
+    response = client.get(PATH, params={"position": "Goalkeeper"})
+    # Assert
+    assert expected
+    assert response.status_code == 200
+    assert response.json() == expected
+    assert len(response.json()) == len(expected)
+
+
+def test_request_get_players_position_ac2_response_case_insensitive(client):
+    # Arrange
+    positions = ["Goalkeeper", "goalkeeper"]
+    # Act
+    responses = [client.get(PATH, params={"position": p}) for p in positions]
+    # Assert
+    assert all(r.status_code == 200 for r in responses)
+    assert responses[0].json()
+    assert responses[0].json() == responses[1].json()
+
+
+def test_request_get_players_position_ac3_response_empty_list(client):
+    # Arrange
+    params = {"position": "Nowhere"}
+    # Act
+    response = client.get(PATH, params=params)
+    # Assert
+    assert response.status_code == 200
+    assert response.json() == []
+
+
+def test_request_get_players_position_ac4_response_unprocessable(client):
+    # Arrange
+    params = {"position": ""}
+    # Act
+    response = client.get(PATH, params=params)
+    # Assert
+    assert response.status_code == 422
+    assert response.json()["detail"][0]["loc"] == ["query", "position"]
+
+
+def test_request_get_players_position_ac5_response_paginated_matches(client):
+    # Arrange
+    expected = [p for p in client.get(PATH).json() if p["position"] == "Centre-Back"]
+    params = {"position": "Centre-Back", "page": 1, "size": 2}
+    # Act
+    first = client.get(PATH, params=params)
+    beyond = client.get(PATH, params={**params, "page": len(expected) // 2 + 2})
+    # Assert
+    assert len(expected) >= 2
+    assert first.status_code == beyond.status_code == 200
+    assert first.json() == expected[:2]
+    assert beyond.json() == []
+
+
+def test_request_get_players_position_ac6_response_isolated_invalidated_cache(client):
+    # Arrange
+    from routes.player_route import CACHE_KEY, simple_memory_cache
+
+    client.portal.call(simple_memory_cache.clear, CACHE_KEY)
+    complete = client.get(PATH).json()
+    positions = ["Goalkeeper", "Centre-Back"]
+    expected = [[p for p in complete if p["position"] == pos] for pos in positions]
+    player = nonexistent_player()
+    player.position = "Goalkeeper"
+    try:
+        # Act
+        misses = [client.get(PATH, params={"position": pos}) for pos in positions]
+        hits = [client.get(PATH, params={"position": pos}) for pos in positions]
+        # Assert
+        assert expected[0] != expected[1]
+        for index in range(2):
+            assert misses[index].status_code == hits[index].status_code == 200
+            assert misses[index].json() == hits[index].json() == expected[index]
+            assert misses[index].headers["X-Cache"] == "MISS"
+            assert hits[index].headers["X-Cache"] == "HIT"
+        # Act
+        created = client.post(PATH, json=player.__dict__)
+        after = client.get(PATH, params={"position": "Goalkeeper"})
+        # Assert
+        assert created.status_code == 201
+        assert after.status_code == 200
+        assert after.headers["X-Cache"] == "MISS"
+        assert len(after.json()) == len(expected[0]) + 1
+        assert [p for p in after.json() if p["id"] == created.json()["id"]] == [
+            created.json()
+        ]
+        assert [p for p in after.json() if p["id"] != created.json()["id"]] == (
+            expected[0]
+        )
+    finally:
+        client.delete(PATH + "squadnumber/" + str(player.squad_number))
+
+
+def test_request_get_players_position_ac7_response_unchanged_unfiltered(client):
+    # Arrange
+    from routes.player_route import CACHE_KEY, simple_memory_cache
+
+    client.portal.call(simple_memory_cache.clear, CACHE_KEY)
+    before = client.get(PATH)
+    # Act
+    filtered = client.get(PATH, params={"position": "Goalkeeper"})
+    after = client.get(PATH)
+    # Assert
+    assert before.status_code == filtered.status_code == after.status_code == 200
+    assert len(before.json()) == 26
+    assert after.json() == before.json()
+    assert before.headers["X-Cache"] == "MISS"
+    assert after.headers["X-Cache"] == "HIT"
+
+
+def test_request_get_players_position_crafted_key_response_isolated_page(client):
+    # Arrange
+    from routes.player_route import CACHE_KEY, simple_memory_cache
+
+    client.portal.call(simple_memory_cache.clear, CACHE_KEY)
+    expected = [p for p in client.get(PATH).json() if p["position"] == "Goalkeeper"][:2]
+    params = {"position": "Goalkeeper", "page": 1, "size": 2}
+    # Act
+    crafted = client.get(PATH, params={"position": "Goalkeeper:page=1:size=2"})
+    real = client.get(PATH, params=params)
+    repeated = client.get(PATH, params=params)
+    # Assert
+    assert crafted.status_code == real.status_code == repeated.status_code == 200
+    assert crafted.json() == []
+    assert len(expected) == 2
+    assert real.json() == repeated.json() == expected
+    assert real.headers["X-Cache"] == "MISS"
+    assert repeated.headers["X-Cache"] == "HIT"

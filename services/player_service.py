@@ -67,7 +67,9 @@ async def count_async(async_session: AsyncSession) -> int:
     return result.scalar_one()
 
 
-async def retrieve_all_async(async_session: AsyncSession) -> List[Player]:
+async def retrieve_all_async(
+    async_session: AsyncSession, position: str | None = None
+) -> List[Player]:
     """
     Retrieves all the players from the database.
 
@@ -81,6 +83,8 @@ async def retrieve_all_async(async_session: AsyncSession) -> List[Player]:
     statement = select(Player)
     result = await async_session.execute(statement)
     players = result.scalars().all()
+    if position is not None:
+        players = [p for p in players if p.position.casefold() == position.casefold()]
     return players
 
 

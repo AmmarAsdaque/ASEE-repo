@@ -10,7 +10,7 @@ Features:
 
 Endpoints:
 - POST /players/                          : Create a new Player.
-- GET /players/                           : Retrieve all Players.
+- GET /players/                           : Retrieve Players, optionally by position.
 - GET /players/starting11                 : Retrieve starting Players.
 - GET /players/count                      : Count all Players.
 - GET /players/{player_id}                : Retrieve Player by UUID
@@ -22,6 +22,7 @@ Endpoints:
 """
 
 from typing import Annotated, List
+from urllib.parse import quote
 from uuid import UUID
 from fastapi import (
     APIRouter,
@@ -115,6 +116,7 @@ async def get_all_async(
     async_session: Annotated[AsyncSession, Depends(generate_async_session)],
     page: Annotated[int | None, Query(ge=1)] = None,
     size: Annotated[int | None, Query(ge=1, le=100)] = None,
+    position: Annotated[str | None, Query(min_length=1)] = None,
 ) -> List[PlayerResponseModel]:
     """
     Endpoint to retrieve all players.
@@ -128,11 +130,15 @@ async def get_all_async(
     paginated = page is not None or size is not None
     page = page if page is not None else 1
     size = size if size is not None else 20
-    cache_key = f"{CACHE_KEY}:page={page}:size={size}" if paginated else CACHE_KEY
+    cache_key = CACHE_KEY
+    if position is not None:
+        cache_key += f":position={quote(position, safe='')}"
+    if paginated:
+        cache_key += f":page={page}:size={size}"
     players = await simple_memory_cache.get(cache_key)
     response.headers["X-Cache"] = "HIT"
     if players is None:
-        players = await player_service.retrieve_all_async(async_session)
+        players = await player_service.retrieve_all_async(async_session, position)
         if paginated:
             players = player_service.paginate_players(players, page, size)
         await simple_memory_cache.set(cache_key, players, ttl=CACHE_TTL)
