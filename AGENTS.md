@@ -49,6 +49,8 @@ each from the last run. Never report a result from an interrupted run.
 - Commit messages follow Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`).
 - Repeatable procedures live in `.agents/skills/`; use `add-endpoint` when
   adding a route.
+- Keep PRs under about 400 changed lines; split larger work.
+- Fill in the AI-disclosure block of .github/pull_request_template.md.
 
 ## Boundaries
 
@@ -66,6 +68,7 @@ each from the last run. Never report a result from an interrupted run.
 - Never commit `.env` or anything with keys or passwords.
 - If a request needs a rule the data does not contain (for example, grouping
   positions into "Defenders"), list what the data has and ask before inventing one.
+- Changes to AGENTS.md, .agents/skills/ and tests/test_architecture.py need my review in a PR.
 
 ## Known failure patterns
 
@@ -74,3 +77,7 @@ each from the last run. Never report a result from an interrupted run.
 - `git diff --check` "trailing whitespace" is usually CRLF line endings on D:;
   confirm with `git -c core.whitespace=cr-at-eol diff --check`.
 - A new endpoint returns 422 unexpectedly: check route order (add-endpoint skill).
+- Never edit, skip or delete an existing test (or tests/player_fake.py) to make it pass; if a test looks wrong, stop and say so.
+- Never swallow errors with a bare `except Exception`; return the status the spec names (e.g. 500) or let it raise.
+- Before writing a helper, search services/ and models/ for an existing one (e.g. validate_squad_number, retrieve_*_async).
+- Every service that loads a player by id or squad number must handle a missing player so the route returns 404.
