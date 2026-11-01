@@ -551,7 +551,7 @@ def test_c3_validate_squad_number_boundaries():
     assert validate_squad_number(1) == 1
     assert validate_squad_number(99) == 99
     for bad in (0, 100):
-        with pytest.raises(ValueError, match="squad_number must be between 1 and 99"):
+        with pytest.raises(ValueError, match="^squad_number must be between 1 and 99$"):
             validate_squad_number(bad)
 
 
@@ -596,7 +596,7 @@ def test_c5_request_post_player_squadnumber_invalid_response_body_detail(client)
         assert response.status_code == 422
         detail = response.json()["detail"][0]
         assert detail["loc"] == ["body", "squad_number"]
-        assert "squad_number must be between 1 and 99" in detail["msg"]
+        assert detail["msg"] == "Value error, squad_number must be between 1 and 99"
     finally:
         client.delete(PATH + "squadnumber/100")
 
