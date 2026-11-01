@@ -35,21 +35,26 @@ each from the last run. Never report a result from an interrupted run.
 
 - Routes stay thin and call a function in `services/player_service.py`;
   routes never build queries.
-- Input validation lives in the Pydantic models; invalid input returns 422.
+- Request-body validation lives in `models/player_model.py`; query and path
+  limits use FastAPI `Query()`/`Path()` in the route. Invalid input returns 422.
 - A missing single player returns 404 via HTTPException; an empty list returns
   200 with `[]`.
 - Tests are integration-only and go in `tests/test_main.py`, named
   `test_request_<method>_<path>_<case>_response_<expectation>`, with
   Arrange/Act/Assert comments. Do not create new test files.
   Why: `docs/adr/0007-integration-only-test-strategy.md` (background only).
-- `GET /players/` is cached in memory (aiocache) under the key "players";
-  writes clear it with `simple_memory_cache.clear(CACHE_KEY)`.
+- `GET /players/` caches under keys that start with "players" (full list
+  "players", pages "players:page=N:size=M"); writes clear them all with
+  `simple_memory_cache.clear(CACHE_KEY)`.
 - Commit messages follow Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`).
 - Repeatable procedures live in `.agents/skills/`; use `add-endpoint` when
   adding a route.
 
 ## Boundaries
 
+- Routes never import `schemas/` or SQL tools and never run queries; enforced
+  by `tests/test_architecture.py`. If it fails, follow its HOW TO FIX line;
+  never edit the test.
 - Only edit files the task needs. Do not edit README.md, CHANGELOG.md,
   rest/players.rest or docs/ unless asked.
 - Never edit existing tests or `tests/player_fake.py` to make tests pass.
@@ -64,7 +69,8 @@ each from the last run. Never report a result from an interrupted run.
 
 ## Known failure patterns
 
-- Tests hang at the first HTTP request inside the sandbox: ask to rerun
-  `uv run pytest -q` outside the sandbox; do not write a wrapper.
-- Trailing whitespace left behind: run `uv run black .`, then the three checks.
+- The first `uv run pytest` in the sandbox can fail on uv's read-only cache:
+  ask to rerun the same command outside the sandbox; do not write a wrapper.
+- `git diff --check` "trailing whitespace" is usually CRLF line endings on D:;
+  confirm with `git -c core.whitespace=cr-at-eol diff --check`.
 - A new endpoint returns 422 unexpectedly: check route order (add-endpoint skill).
