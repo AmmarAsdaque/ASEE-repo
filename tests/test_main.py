@@ -219,6 +219,26 @@ def test_request_post_player_body_nonexistent_response_status_created(client):
         client.delete(PATH + "squadnumber/" + str(player.squad_number))
 
 
+def test_request_post_player_squadnumber_fifty_response_matching_first_name(client):
+    """Creating squad number 50 preserves its first name when fetched."""
+    # Arrange
+    player = nonexistent_player()
+    player.squad_number = 50
+    squad_path = PATH + "squadnumber/50"
+    try:
+        # Act
+        created = client.post(PATH, json=player.__dict__)
+        fetched = client.get(squad_path)
+        # Assert
+        assert created.status_code == 201
+        assert fetched.status_code == 200
+        assert fetched.json()["squadNumber"] == 50
+        assert fetched.json()["firstName"] == player.first_name
+    finally:
+        # Teardown — remove the created player even if an assertion fails
+        client.delete(squad_path)
+
+
 # PUT /players/squadnumber/{squad_number} --------------------------------------
 
 
