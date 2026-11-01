@@ -175,5 +175,4 @@ cython_debug/
 .aws/
 .codex/
 
-# local tool folders
-.agents/
+
