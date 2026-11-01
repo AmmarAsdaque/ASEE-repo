@@ -85,6 +85,6 @@ def unknown_player() -> Player:
         id="00000000-0000-0000-0000-000000000000",
         first_name="John",
         last_name="Doe",
-        squad_number=999,
+        squad_number=98,
         position="Lipsum",
     )

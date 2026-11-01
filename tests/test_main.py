@@ -505,3 +505,104 @@ def test_request_get_players_count_empty_response_zero(client):
     finally:
         app.dependency_overrides.pop(generate_async_session)
         client.portal.call(engine.dispose)
+
+
+# A2: squad number range (spec: a2/spec.md) ------------------------------------
+
+
+def test_c1_request_post_player_squadnumber_zero_response_status_unprocessable(client):
+    """POST /players/ with squad number 0 returns 422 and saves nothing"""
+    # Arrange
+    player = nonexistent_player()
+    player.squad_number = 0
+    try:
+        # Act
+        response = client.post(PATH, json=player.__dict__)
+        # Assert
+        assert response.status_code == 422
+        assert client.get(PATH + "squadnumber/0").status_code == 404
+    finally:
+        client.delete(PATH + "squadnumber/0")
+
+
+def test_c2_request_post_player_squadnumber_hundred_response_status_unprocessable(client):
+    """POST /players/ with squad number 100 returns 422 and saves nothing"""
+    # Arrange
+    player = nonexistent_player()
+    player.squad_number = 100
+    try:
+        # Act
+        response = client.post(PATH, json=player.__dict__)
+        # Assert
+        assert response.status_code == 422
+        assert client.get(PATH + "squadnumber/100").status_code == 404
+    finally:
+        client.delete(PATH + "squadnumber/100")
+
+
+def test_c3_validate_squad_number_boundaries():
+    """validate_squad_number accepts 1 and 99 and rejects 0 and 100"""
+    import pytest
+
+    from models.player_model import validate_squad_number
+
+    assert validate_squad_number(1) == 1
+    assert validate_squad_number(99) == 99
+    for bad in (0, 100):
+        with pytest.raises(ValueError, match="squad_number must be between 1 and 99"):
+            validate_squad_number(bad)
+
+
+def test_c3_request_post_player_squadnumber_ninety_nine_response_status_created(client):
+    """POST /players/ with squad number 99 is accepted"""
+    # Arrange
+    player = nonexistent_player()
+    player.squad_number = 99
+    try:
+        # Act
+        response = client.post(PATH, json=player.__dict__)
+        # Assert
+        assert response.status_code == 201
+    finally:
+        client.delete(PATH + "squadnumber/99")
+
+
+def test_c4_request_put_player_squadnumber_hundred_response_status_unprocessable(client):
+    """PUT /players/squadnumber/23 with squad number 100 in the body returns 422; player unchanged"""
+    # Arrange
+    player = existing_player()
+    player.squad_number = 100
+    before = client.get(PATH + "squadnumber/23").json()
+    # Act
+    response = client.put(PATH + "squadnumber/23", json=player.__dict__)
+    # Assert
+    assert response.status_code == 422
+    assert client.get(PATH + "squadnumber/23").json() == before
+
+
+def test_c5_request_post_player_squadnumber_invalid_response_body_detail(client):
+    """A rejected squad number names the field and the rule in the 422 body"""
+    # Arrange
+    player = nonexistent_player()
+    player.squad_number = 100
+    try:
+        # Act
+        response = client.post(PATH, json=player.__dict__)
+        # Assert
+        assert response.status_code == 422
+        detail = response.json()["detail"][0]
+        assert detail["loc"] == ["body", "squad_number"]
+        assert "squad_number must be between 1 and 99" in detail["msg"]
+    finally:
+        client.delete(PATH + "squadnumber/100")
+
+
+def test_c6_unknown_player_fixture_is_valid_and_unused(client):
+    """The unknown player used by existing tests has a valid, unused squad number"""
+    # Arrange
+    squad_number = unknown_player().squad_number
+    # Act
+    response = client.get(PATH + "squadnumber/" + str(squad_number))
+    # Assert
+    assert 1 <= squad_number <= 99
+    assert response.status_code == 404
