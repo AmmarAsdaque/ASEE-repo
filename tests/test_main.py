@@ -48,6 +48,17 @@ def test_request_get_health_response_status_ok(client):
     assert response.json() == {"status": "ok"}
 
 
+def test_request_get_health_version_response_app_version(client, monkeypatch):
+    """GET /health/version returns the configured application version."""
+    # Arrange
+    monkeypatch.setattr(client.app, "version", "2.3.4")
+    # Act
+    response = client.get("/health/version")
+    # Assert
+    assert response.status_code == 200
+    assert response.json() == {"version": "2.3.4"}
+
+
 # GET /players/ ----------------------------------------------------------------
 
 
