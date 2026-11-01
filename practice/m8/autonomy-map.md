@@ -1,7 +1,7 @@
 # Autonomy map: players API (me + Codex)
 
 Context: solo course repo, fork of nanotaboada/python-samples-fastapi-restful. No production
-deployment. Drafted with a chat assistant from my course logs; every rating and rung decided by me.
+deployment. Every rating and rung decided by me.
 Ceiling rule: any Low -> rung 1 max; any Medium -> rung 2 max; all High -> rung 3;
 all High and verified automatically -> rung 4. Rung 5 is out of scope.
 
