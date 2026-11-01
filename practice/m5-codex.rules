@@ -1,0 +1,15 @@
+prefix_rule(pattern = ["uv", "run", "pytest"], decision = "allow")
+prefix_rule(pattern = ["uv", "run", ["flake8", "black"]], decision = "allow")
+prefix_rule(pattern = ["git", ["status", "diff"]], decision = "allow")
+prefix_rule(pattern = ["git", "push"], decision = "forbidden",
+            justification = "Pushing is done by the human.")
+prefix_rule(pattern = ["rm"], decision = "forbidden",
+            justification = "Deleting files is done by the human.")
+prefix_rule(pattern = ["uv", ["add", "pip"]], decision = "prompt",
+            justification = "New dependencies need approval.")
+prefix_rule(pattern = [["python", "python3", "bash", "sh"]], decision = "prompt",
+            justification = "Scripts can edit many files at once; review first.")
+prefix_rule(pattern = [["mv", "cp", "sed"]], decision = "prompt",
+            justification = "File moves and in-place edits need review.")
+prefix_rule(pattern = ["git", ["commit", "checkout", "reset", "merge", "switch", "clean", "stash"]],
+            decision = "prompt", justification = "Git history changes are done by the human.")

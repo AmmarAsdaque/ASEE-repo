@@ -78,6 +78,12 @@ async def retrieve_all_async(async_session: AsyncSession) -> List[Player]:
     return players
 
 
+def paginate_players(players: List[Player], page: int, size: int) -> List[Player]:
+    """Return a page without changing the complete collection or its order."""
+    offset = (page - 1) * size
+    return players[offset : offset + size]
+
+
 async def retrieve_by_id_async(
     async_session: AsyncSession, player_id: UUID
 ) -> Optional[Player]:
