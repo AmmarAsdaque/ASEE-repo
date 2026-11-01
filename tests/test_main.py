@@ -525,7 +525,9 @@ def test_c1_request_post_player_squadnumber_zero_response_status_unprocessable(c
         client.delete(PATH + "squadnumber/0")
 
 
-def test_c2_request_post_player_squadnumber_hundred_response_status_unprocessable(client):
+def test_c2_request_post_player_squadnumber_hundred_response_status_unprocessable(
+    client,
+):
     """POST /players/ with squad number 100 returns 422 and saves nothing"""
     # Arrange
     player = nonexistent_player()
@@ -567,7 +569,9 @@ def test_c3_request_post_player_squadnumber_ninety_nine_response_status_created(
         client.delete(PATH + "squadnumber/99")
 
 
-def test_c4_request_put_player_squadnumber_hundred_response_status_unprocessable(client):
+def test_c4_request_put_player_squadnumber_hundred_response_status_unprocessable(
+    client,
+):
     """PUT /players/squadnumber/23 with squad number 100 in the body returns 422; player unchanged"""
     # Arrange
     player = existing_player()
